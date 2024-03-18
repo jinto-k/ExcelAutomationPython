@@ -1,0 +1,38 @@
+import openpyxl as xl
+from openpyxl.chart import BarChart, Reference
+
+wb = xl.load_workbook('transactions.xlsx')
+# this load_workbook returns a workbook object
+sheet = wb['Sheet1']
+# Sheet1 is the name of the sheet inside the transactions.
+# wb[sheet1] returns a sheet
+
+row_number = sheet.max_row  # gives maximum number of rows
+# cell = sheet['a1']
+# or
+cell = sheet.cell(1, 1)
+
+# print(cell.value)  # prints the value of the cell
+
+for row in range(2, sheet.max_row + 1):
+    cell = sheet.cell(row, 3)
+    corrected_price = 0.9 * cell.value
+
+    corrected_price_new_cell = sheet.cell(row, 4)
+    corrected_price_new_cell.value = corrected_price
+
+
+sheet.cell(1, 4).value = 'corrected price'
+
+# The following code is to create a bar graph
+values = Reference(sheet,
+                   min_row=2,
+                   max_row=4,
+                   min_col=4,
+                   max_col=4)
+
+chart = BarChart()
+chart.add_data(values)
+sheet.add_chart(chart, 'e2')
+
+wb.save('transactions2.xlsx')
