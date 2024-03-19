@@ -2,7 +2,7 @@ import openpyxl as xl
 from openpyxl.chart import BarChart, Reference
 
 wb = xl.load_workbook('transactions.xlsx')
-# this load_workbook returns a workbook object
+# load_workbook returns a workbook object
 sheet = wb['Sheet1']
 # Sheet1 is the name of the sheet inside the transactions.
 # wb[sheet1] returns a sheet
